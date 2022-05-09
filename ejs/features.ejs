@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+    <%- include('./partials/head'); %>
+<body>
+    <%- include('./partials/navbar'); %>
+    <div class="container">
+        <h1>Features</h1>
+        <div id="app">
+            <!-- @submit.prevent="createServer" - это как onSubmit=createServer с preventDefault в Реакте-->
+            <form @submit.prevent="createServer">
+                <div class="mb-3">
+                    <!-- v-model="name" - это как контролируемый инпут в Реакте, здесь инпут связывается с name в state -->
+                    <!-- v-model - это комбинация "v-bind:" / ":" (связывание значния атрибута со значением в стейте компонента) -->
+                    <!-- и "v-on:" / "@" - обработчика события -->
+                    <input type="text" class="form-control" v-model="name">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <!-- v-if="servers.length === 0" - это conditional rendering - DOM-узел отрисуется, если выражение truthy-->
+            <div class="spinner-border" role="status" v-if="servers.length === 0">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <ul class="list-group" v-else>
+                <!-- v-for="server in servers" - отрисовать что-то несколько раз-->
+                <!-- @click - то же, что и onClick-->
+                <li class="list-group-item" v-for="server in servers" @click="removeServer(server.id)">
+                    <!-- чтобы как в Реакте вставить в разметку JavaScript нужно использовать двойные фигурные скобки {{ }} -->
+                    {{ server.name }}
+                    <strong>
+                        {{ server.status }}
+                    </strong>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--подключаем Vue-->
+    <script src="https://unpkg.com/vue@3"></script>
+    <!--и скрипт, которой представляет код нашего приложения на фронте-->
+    <script src="./app.js"></script>
+</body>
+</html>
